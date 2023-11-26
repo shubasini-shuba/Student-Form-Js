@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>New Student Form</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='new-form.css'>
+    <!-- <script src='main.js'></script> -->
+</head>
+
+<body>
+
+    <div class="form-container">
+        <div class="form-section">
+            <form id="myForm">
+                <div>
+                    <label>Name</label>
+                    <input type="text" id="inputname">
+                </div>
+                <div>
+                    <label>Age</label>
+                    <input type="text" id="inputage">
+                </div>
+                <div class="radio-select">
+                    <label>Gender</label>
+                    <input type="radio" name="gender" value="Male"> Male
+                    <input type="radio" name="gender" value="Female"> Female
+                </div>
+                <div>
+                    <label>Course</label>
+                    <select id="course">
+                        <option>Select</option>
+                        <option>JavaScript</option>
+                        <option>ReactJs</option>
+                        <option>API</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text" id="email">
+                </div>
+                <div class="check-select">
+                    <label>Languages</label>
+                    <input class="checkboxes" type="checkbox" name="languages" value="English"> English
+                    <input class="checkboxes" type="checkbox" name="languages" value="Tamil"> Tamil
+                    <input class="checkboxes" type="checkbox" name="languages" value="Hindi"> Hindi
+                </div>
+            </form>
+            <button onclick="submit()" class="sub-btn">Submit</button>
+        </div>
+
+        <div class="form-tabel">
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Course</th>
+                    <th>Email</th>
+                    <th>Languages</th>
+                    <th>Action</th>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+
+        var checkbox = document.querySelectorAll(".checkboxes");
+        var checklist = [];
+        var tdlang;
+        for (var checkboxes of checkbox) {
+            checkboxes.addEventListener("click", function () {
+                if (this.checked == true) {
+                    checklist.push(this.value);
+                    tdlang = checklist;
+                } else {
+                    console.log("you are unchecked");
+                }
+            })
+        }
+
+        function submit() {
+            //selecting elements
+            var name = document.getElementById("inputname");
+            var tdname = name.value;
+            var age = document.getElementById("inputage");
+            var tdage = age.value;
+            var gender = document.querySelector("input[name=gender]:checked").value;
+            var tdgender = gender;
+            var course = document.getElementById("course");
+            var tdcourse = course.value;
+            var email = document.getElementById("email");
+            var tdemail = email.value;
+
+            //create delete button
+
+            var delbtn = document.createElement("button");
+            delbtn.innerHTML = "Delete";
+            delbtn.addEventListener("click", deldata);
+            //console.log(tdname, tdage, tdgender, tdcourse, tdemail, checklist);
+
+
+
+            var tr = document.createElement("tr");
+
+            const formdata = [tdname, tdage, tdgender, tdcourse, tdemail, checklist, delbtn];
+            for (i = 0; i < formdata.length; i = i + 1) {
+                var td = document.createElement("td");
+                tdvalue = formdata[i];
+
+                td.append(tdvalue);
+                tr.append(td);
+            }
+            var tbody = document.getElementById("tbody");
+            tbody.append(tr);
+            console.log(tdname, tdage, tdgender, tdcourse, tdemail, checklist);
+
+            function deldata(e) {
+                e.target.parentElement.parentElement.remove();
+            }
+            document.getElementById("myForm").reset();
+            checklist.length = 0;
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
